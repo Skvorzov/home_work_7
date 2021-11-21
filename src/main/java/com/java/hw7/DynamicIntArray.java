@@ -18,8 +18,9 @@ public class DynamicIntArray {
      */
     public void add(int element) {
         if (size == array.length) {
-            array[size++] = element;
+            resize();
         }
+        array[size++] = element;
     }
 
     /**
@@ -28,14 +29,16 @@ public class DynamicIntArray {
      * @return true if successfully removed and false if the array doesn't contain such an element
      */
     public boolean remove(int element) {
-        for (int i = 0; i < array.length - 1; i++) {
+        for (int i = 0; i < size; i++) {
             if (array[i] == element) {
-                array[i] = 0;
+                for (int j = 0; j < size; j++) {
+                    array[j] = array[j + 1];
+                }
+                size--;
                 return true;
-            } else {
-                return false;
             }
         }
+        return false;
     }
 
     /**
